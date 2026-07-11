@@ -1,0 +1,17 @@
+# Never commit personal data or secrets
+config.yaml
+*.token
+cookies.txt
+.secrets/
+
+# Downloaded backups
+UniBackup/
+Canvas/
+OneDrive/
+output/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

@@ -44,3 +44,16 @@ def interactive_setup(cfg: dict) -> dict:
     cfg.update({"canvas_url": url, "canvas_token": token, "output_dir": out})
     save(cfg)
     return cfg
+
+
+def choose_output(cfg: dict) -> dict:
+    """Ask where to save this run's backup, defaulting to the saved location."""
+    default_out = cfg.get("output_dir") or str(Path.home() / "UniBackup")
+    out = input(f"\nWhere should the files be saved? "
+                f"[{default_out}]: ").strip() or default_out
+    out = str(Path(out).expanduser())
+    if out != cfg.get("output_dir"):
+        cfg["output_dir"] = out
+        save(cfg)
+    print(f"Saving to: {out}")
+    return cfg

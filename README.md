@@ -55,6 +55,9 @@ The first time, it asks for:
 - your **access token** (paste it),
 - **where to save** the backup (press Enter for the default: a `UniBackup` folder in your home directory).
 
+Each time you start a backup it also asks **where to save** (press Enter to keep
+your usual location, or type a new path — e.g. an external drive).
+
 Then pick **1** from the menu to back up Canvas. Done!
 
 ---
@@ -75,18 +78,23 @@ OneDrive backup uses a free tool called **rclone**.
 
 ## Where your files end up
 
+Courses that bundle several topics (e.g. "Structures, Structural Dynamics and
+FEA") are split by **section** first, then by type inside each section, so each
+subject stays separate:
+
 ```
 UniBackup/
 ├── Canvas/
 │   └── <Term>/
 │       └── CODE (Course Name)/
 │           ├── Lecture Materials & Files/
-│           │   ├── Lecture Slides & Notes/
-│           │   ├── Practice & Tutorials/
-│           │   ├── Solutions/
-│           │   ├── Past Exam Papers/
-│           │   ├── Videos/
-│           │   └── Images & Misc/
+│           │   ├── Structural Dynamics/         <- a course section
+│           │   │   ├── Lecture Slides & Notes/
+│           │   │   ├── Practice & Tutorials/
+│           │   │   └── Solutions/
+│           │   ├── Finite Element Analysis/     <- another section
+│           │   │   └── Lecture Slides & Notes/
+│           │   └── Other Materials/
 │           ├── Pages/            (Canvas pages saved as HTML)
 │           ├── My Submissions/
 │           ├── YouTube Links/
@@ -94,6 +102,10 @@ UniBackup/
 └── OneDrive/
     └── (the folders you chose)
 ```
+
+Single-topic courses skip the section layer and are organised by type directly
+(`Lecture Slides & Notes/`, `Practice & Tutorials/`, `Solutions/`,
+`Past Exam Papers/`, `Videos/`, `Images & Misc/`).
 
 ---
 

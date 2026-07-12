@@ -37,15 +37,18 @@ def main():
         choice = menu()
         if choice == "1":
             cfg = ensure_canvas_config(cfg)
+            cfg = config.choose_output(cfg)
             out = canvas.run(cfg)
             organise.run(cfg["output_dir"])
             print(f"\nAll done. Your files are in: {out.parent}")
         elif choice == "2":
             if not cfg.get("output_dir"):
                 cfg = config.interactive_setup(cfg)
+            cfg = config.choose_output(cfg)
             onedrive.run(cfg)
         elif choice == "3":
             cfg = ensure_canvas_config(cfg)
+            cfg = config.choose_output(cfg)
             canvas.run(cfg)
             organise.run(cfg["output_dir"])
             onedrive.run(cfg)

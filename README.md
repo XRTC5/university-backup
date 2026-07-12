@@ -73,6 +73,7 @@ OneDrive backup uses a free tool called **rclone**.
 2. Run `python backup.py` and choose **2**.
 3. A browser opens — **sign in with your university account**. Accept the default answers to any questions in the terminal.
 4. It lists your OneDrive folders and lets you **pick which to download** (type `0` for everything, or e.g. `1,3,4`).
+5. Afterwards it asks **"Also collect all documents & folders shared with you by others? [y/N]"** — answer `y` to also back up everything teammates/staff shared with you (group projects, shared folders, etc.), saved to an `OneDrive Shared/` folder. This finds them via the reliable "Shared with you" feed, and skips items your institution blocks from download (e.g. view-only videos).
 
 ---
 

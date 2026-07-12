@@ -86,3 +86,7 @@ def run(cfg):
         subprocess.run([exe, "copy", src, str(dest), "--progress",
                         "--transfers", "8", "--checkers", "16"])
     print("\nOneDrive backup done.")
+
+    # opt-in: also grab files/folders others shared with you
+    from . import shared
+    shared.run(cfg, exe)

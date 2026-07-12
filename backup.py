@@ -16,7 +16,8 @@ def menu():
 =====================================================
   1. Back up Canvas  (all courses: slides, files,
      videos, pages, assignments, grades) + organise
-  2. Back up OneDrive (choose which folders)
+  2. Back up OneDrive (choose folders; then optionally
+     collect everything others shared with you)
   3. Do both
   4. Re-organise already-downloaded Canvas files
   5. Change settings (Canvas address / token / folder)

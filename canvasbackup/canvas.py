@@ -37,10 +37,39 @@ def connect(cfg):
 
 
 def list_courses(s, base):
-    return list(paginate(s, f"{base}/api/v1/courses",
-                         {"include[]": "term",
-                          "state[]": ["available", "completed"],
-                          "enrollment_state": ""}))
+    """Every course on the account, including ones the school hides.
+
+    After a term ends many universities conclude enrollments and drop those
+    courses from the /courses listing entirely, so students see only one or
+    two active shells. The enrollments endpoint still knows every course the
+    account was enrolled in, and fetching those courses directly by id
+    usually still works, so merge both sources. Courses the school has
+    actually revoked (403/404) are reported and skipped.
+    """
+    courses = {c["id"]: c for c in paginate(s, f"{base}/api/v1/courses",
+                                            {"include[]": "term",
+                                             "state[]": ["available", "completed"],
+                                             "enrollment_state": ""})}
+    enrolled = {e["course_id"] for e in paginate(
+        s, f"{base}/api/v1/users/self/enrollments",
+        {"state[]": ["active", "completed", "invited", "inactive"]})}
+    hidden = sorted(enrolled - set(courses))
+    if hidden:
+        print(f"Course list shows {len(courses)} course(s); enrollments reveal "
+              f"{len(hidden)} more the school hides - fetching those directly.")
+    for cid in hidden:
+        r = api_get(s, f"{base}/api/v1/courses/{cid}", params={"include[]": "term"})
+        try:
+            c = r.json() if r.ok else {}
+        except ValueError:
+            c = {}
+        if c.get("name"):
+            courses[cid] = c
+        else:
+            why = ("restricted by course dates" if c.get("access_restricted_by_date")
+                   else f"HTTP {r.status_code}")
+            print(f"  course {cid}: not accessible ({why}) - skipped.")
+    return list(courses.values())
 
 
 def _html_bodies(s, base, cid):
